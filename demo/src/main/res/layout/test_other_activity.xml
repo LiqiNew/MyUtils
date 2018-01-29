@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/test_other_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SharePreference存储值>>>1"/>
+
+        <TextView
+            android:id="@+id/test_other_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/test_other_button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AES要加密内容:内容"/>
+
+        <Button
+            android:id="@+id/test_other_button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Base64要编码内容:内容"/>
+
+        <Button
+            android:id="@+id/test_other_button4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MD5要加密内容:内容"/>
+
+        <Button
+            android:id="@+id/test_other_button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="testFile文件写入"/>
+
+        <Button
+            android:id="@+id/test_other_button6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="时间值获取："/>
+
+        <Button
+            android:id="@+id/test_other_button7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Activity跳转操作"/>
+
+        <Button
+            android:id="@+id/test_other_button8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="字符串验证和操作"/>
+
+        <Button
+            android:id="@+id/test_other_button9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="手机震动"/>
+
+        <Button
+            android:id="@+id/test_other_button10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="系统资源操作"/>
+
+        <Button
+            android:id="@+id/test_other_button11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="网络检测"/>
+
+        <Button
+            android:id="@+id/test_other_button12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="wifi开启"/>
+
+        <Button
+            android:id="@+id/test_other_button13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="单位换算：5dp换算值px值为？"/>
+
+        <Button
+            android:id="@+id/test_other_button14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="zip压缩文件写入\n先写入、再解压、再压缩测试用例"/>
+
+        <Button
+            android:id="@+id/test_other_button15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="XML解析\n解析数据格式看demo和打印日志）"/>
+
+        <TextView
+            android:id="@+id/test_other_textview01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/test_other_button16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="图片加载"/>
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="120dp"/>
+    </LinearLayout>
+</ScrollView>
