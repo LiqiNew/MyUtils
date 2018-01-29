@@ -102,7 +102,7 @@ public class TestOtherActivity extends AppCompatActivity {
             }
         });
 
-        //Base64编码
+        //Base64编码解码
         findViewById(R.id.test_other_button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,14 +135,14 @@ public class TestOtherActivity extends AppCompatActivity {
             }
         });
 
-        //testFile文件写入
+        //File文件操作
         findViewById(R.id.test_other_button5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Button button = (Button) v;
                 //写入
                 if (mTestFile == 0) {
-                    button.setText("testFile文件正在写入...");
+                    button.setText("File文件正在写入...");
                     button.setEnabled(false);
                     new Thread(new Runnable() {
                         @Override
@@ -168,7 +168,7 @@ public class TestOtherActivity extends AppCompatActivity {
                                     TestOtherActivity.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            button.setText("testFile文件删除\n写入和删除路径：" + foundFile.getAbsolutePath());
+                                            button.setText("File文件删除\n写入和删除路径：" + foundFile.getAbsolutePath());
                                             button.setEnabled(true);
                                             mTestFile = 1;
                                         }
@@ -180,7 +180,7 @@ public class TestOtherActivity extends AppCompatActivity {
                                     TestOtherActivity.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            button.setText("testFile文件写入\n写入和删除路径：" + foundFile.getAbsolutePath());
+                                            button.setText("File文件写入\n写入和删除路径：" + foundFile.getAbsolutePath());
                                             button.setEnabled(true);
                                         }
                                     });
@@ -193,7 +193,7 @@ public class TestOtherActivity extends AppCompatActivity {
                 }
                 //删除
                 else {
-                    button.setText("testFile文件正在删除...");
+                    button.setText("File文件正在删除...");
                     button.setEnabled(false);
                     new Thread(new Runnable() {
                         @Override
@@ -221,7 +221,7 @@ public class TestOtherActivity extends AppCompatActivity {
                                 TestOtherActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        button.setText("testFile文件写入\n写入和删除路径：" + foundString);
+                                        button.setText("File文件写入\n写入和删除路径：" + foundString);
                                         button.setEnabled(true);
                                         mTestFile = 0;
                                     }
@@ -233,7 +233,7 @@ public class TestOtherActivity extends AppCompatActivity {
                                 TestOtherActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        button.setText("testFile文件删除\n写入和删除路径：" + foundString);
+                                        button.setText("File文件删除\n写入和删除路径：" + foundString);
                                         button.setEnabled(true);
                                     }
                                 });
@@ -244,7 +244,7 @@ public class TestOtherActivity extends AppCompatActivity {
             }
         });
 
-        //日期操作测试用例
+        //日期获取和计算
         findViewById(R.id.test_other_button6).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,7 +261,7 @@ public class TestOtherActivity extends AppCompatActivity {
             }
         });
 
-        //Activity跳转操作
+        //界面跳转Intent操作
         findViewById(R.id.test_other_button7).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -275,7 +275,7 @@ public class TestOtherActivity extends AppCompatActivity {
             }
         });
 
-        //字符串验证和操作
+        //字符串验证和数值转换操作
         findViewById(R.id.test_other_button8).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -419,7 +419,7 @@ public class TestOtherActivity extends AppCompatActivity {
             }
         });
 
-        //zip压缩文件解压
+        //zip压缩和解压文件
         findViewById(R.id.test_other_button14).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -571,6 +571,7 @@ public class TestOtherActivity extends AppCompatActivity {
             }
         });
 
+        //图片加载操作
         final ImageView imageView= (ImageView) findViewById(R.id.image_view);
         findViewById(R.id.test_other_button16).setOnClickListener(new View.OnClickListener() {
             @Override

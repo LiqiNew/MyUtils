@@ -42,7 +42,7 @@
             android:id="@+id/test_other_button5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="testFile文件写入"/>
+            android:text="File文件写入"/>
 
         <Button
             android:id="@+id/test_other_button6"
@@ -54,13 +54,13 @@
             android:id="@+id/test_other_button7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Activity跳转操作"/>
+            android:text="界面跳转Intent操作"/>
 
         <Button
             android:id="@+id/test_other_button8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="字符串验证和操作"/>
+            android:text="字符串验证和数值转换操作"/>
 
         <Button
             android:id="@+id/test_other_button9"

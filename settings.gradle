@@ -1,1 +1,1 @@
-include ':demo', ':staticUtils'
+include ':demo', ':utils'
