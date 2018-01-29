@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/liqinew/homeassemblyview.svg)](https://jitpack.io/#liqinew/homeassemblyview)
+[![](https://jitpack.io/v/liqinew/myutils.svg)](https://jitpack.io/#liqinew/myutils)
 [![](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-%E6%9D%8E%E5%A5%87-orange.svg)](https://github.com/LiqiNew)
 
 # MyUtils
@@ -32,12 +32,12 @@ allprojects {
 　　}
 }
 ```
-**2：依赖HomeAssemblyView**<br>
+**2：依赖MyUtils**<br>
 ```gradle
-compile 'com.github.liqinew:homeassemblyview:V.1.0.0'
+compile 'com.github.liqinew:myutils:V.1.0.0'
 ```
 
-###  [点击查阅MyUtils-API文档](https://github.com/LiqiNew)
+###  [点击查阅MyUtils-API文档](https://liqinew.github.io/MyUtils/)
 
 ### 对应的工具对象
 
