@@ -58,3 +58,5 @@ compile 'com.github.liqinew:myutils:V.1.0.0'
 * **ImageLoaderUtils**对象是图片加载工具，采用image-loader框架实现加载。
 * **ImageStaticDispose**对象是图片处理工具
 * **XmlUtils**对象是XML解析操作工具，只支持几种指定格式。(建议下载demo查看支持的XML格式)
+
+#### 如有没有包含的工具，后续会慢慢完善添加进来。如你有好的工具也可以通过QQ：543945827推荐给我。<br>另外别忘记给我star哦。^_^..谢谢。
