@@ -4,7 +4,7 @@
 # MyUtils
 MyUtils是一个包含全方位的工具的工具项目。项目里面提供Base64编码解码工具、MD5加密工具、AES加密解码工具、SharePreference操作工具、
 File文件操作工具、日期获取和计算工具、界面跳转Intent操作工具、字符串验证和数值转换操作工具、手机震动工具、系统资源操作工具、网络检测工具、
-wifi操作工具、单位换算工具、zip压缩和解压操作工具、XML解析操作工具（只支持几种指定格式）、图片加载和处理工具。
+wifi操作工具、单位换算工具、zip压缩和解压操作工具、XML解析操作工具（只支持几种指定格式）、图片加载和处理工具，数据库操作（增删改查）工具。
 
 ### 内部远程依赖Library（已经远程依赖的Library，切勿主项目里重复依赖。）
 
@@ -34,7 +34,7 @@ allprojects {
 ```
 **2：依赖MyUtils**<br>
 ```gradle
-compile 'com.github.liqinew:myutils:V.1.0.0'
+compile 'com.github.liqinew:myutils:V.1.0.1'
 ```
 
 ###  [点击查阅MyUtils-API文档](https://liqinew.github.io/MyUtils/)
@@ -57,6 +57,7 @@ compile 'com.github.liqinew:myutils:V.1.0.0'
 * **ZipUtils**对象是zip压缩和解压操作工具
 * **ImageLoaderUtils**对象是图片加载工具，采用image-loader框架实现加载。
 * **ImageStaticDispose**对象是图片处理工具
+* **BaseDBManagerOperation**对象是数据库操作（增删改查）工具
 * **XmlUtils**对象是XML解析操作工具，只支持几种指定格式。(建议下载demo查看支持的XML格式)
 
 #### 如有没有包含的工具，后续会慢慢完善添加进来。如你有好的工具也可以通过QQ：543945827推荐给我。<br>另外别忘记给我star哦。^_^..谢谢。

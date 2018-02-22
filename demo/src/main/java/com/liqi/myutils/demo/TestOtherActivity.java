@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liqi.Logger;
+import com.liqi.myutils.demo.db.TestDataBaseOperateActivity;
 import com.liqi.utils.ActivityUtil;
 import com.liqi.utils.FDUnitUtil;
 import com.liqi.utils.NetWorkUtil;
@@ -298,7 +299,7 @@ public class TestOtherActivity extends AppCompatActivity {
                  *
                  */
                 boolean matchMobile = Validation.matchMobile("19999999999");
-                Toast.makeText(TestOtherActivity.this, "double类型12.123转换值：" + doubleToInt + "\n19999999999手机号码验证结果：" + matchMobile,Toast.LENGTH_SHORT).show();
+                Toast.makeText(TestOtherActivity.this, "double类型12.123转换值：" + doubleToInt + "\n19999999999手机号码验证结果：" + matchMobile, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -337,7 +338,7 @@ public class TestOtherActivity extends AppCompatActivity {
                  *
                  */
                 String phoneModel = StaticUtility.getPhoneModel();
-                Toast.makeText(TestOtherActivity.this, "手机品牌：" + phoneBrand + "<>手机型号：" + phoneModel + "<>项目版本号：" + versionString,Toast.LENGTH_SHORT).show();
+                Toast.makeText(TestOtherActivity.this, "手机品牌：" + phoneBrand + "<>手机型号：" + phoneModel + "<>项目版本号：" + versionString, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -355,9 +356,9 @@ public class TestOtherActivity extends AppCompatActivity {
                  * 网络检测
                  */
                 if (NetWorkUtil.isNetworkConnectionsOK(TestOtherActivity.this)) {
-                    Toast.makeText(TestOtherActivity.this, "网络可用",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TestOtherActivity.this, "网络可用", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(TestOtherActivity.this, "网络不可用",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TestOtherActivity.this, "网络不可用", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -548,7 +549,7 @@ public class TestOtherActivity extends AppCompatActivity {
         findViewById(R.id.test_other_button15).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String xml="<?xml version='1.0' encoding='UTF-8'?>\n" +
+                String xml = "<?xml version='1.0' encoding='UTF-8'?>\n" +
                         "<program>\n" +
                         " <data1>\n" +
                         "<t>测试类型1</t>\n" +
@@ -559,20 +560,20 @@ public class TestOtherActivity extends AppCompatActivity {
                         "<v>测试类型1>2</v>\n" +
                         "</data2>\n" +
                         "</program>";
-                Logger.e("XML格式",xml);
-                List<Map<String,String>> list = XmlUtils.xmlPullObjList(xml, new String[]{"t", "v"}, new String[]{"data1","data2"});
-                for (int i = 0; i <list.size() ; i++) {
+                Logger.e("XML格式", xml);
+                List<Map<String, String>> list = XmlUtils.xmlPullObjList(xml, new String[]{"t", "v"}, new String[]{"data1", "data2"});
+                for (int i = 0; i < list.size(); i++) {
                     Map<String, String> map = list.get(i);
                     String t = map.get("t");
                     String v1 = map.get("v");
                     String trim = testOtherTextview01.getText().toString();
-                    testOtherTextview01.setText(trim+"第"+(i+1)+"节目录解析数据：t="+t+"___v="+v1+"\n");
+                    testOtherTextview01.setText(trim + "第" + (i + 1) + "节目录解析数据：t=" + t + "___v=" + v1 + "\n");
                 }
             }
         });
 
         //图片加载操作
-        final ImageView imageView= (ImageView) findViewById(R.id.image_view);
+        final ImageView imageView = (ImageView) findViewById(R.id.image_view);
         findViewById(R.id.test_other_button16).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -582,6 +583,13 @@ public class TestOtherActivity extends AppCompatActivity {
                         R.mipmap.ic_launcher,
                         true,
                         30);
+            }
+        });
+        //数据库操作演示
+        findViewById(R.id.test_other_button18).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtil.getActivityUtil().startActivity(TestOtherActivity.this, TestDataBaseOperateActivity.class);
             }
         });
     }

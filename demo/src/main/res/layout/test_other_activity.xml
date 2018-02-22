@@ -120,5 +120,10 @@
             android:layout_width="120dp"
             android:layout_gravity="center_horizontal"
             android:layout_height="120dp"/>
+        <Button
+            android:id="@+id/test_other_button18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="进入数据操作演示"/>
     </LinearLayout>
 </ScrollView>

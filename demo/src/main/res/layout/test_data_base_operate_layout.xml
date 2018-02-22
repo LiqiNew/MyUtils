@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="操作数据库提示信息："
+            android:textColor="@android:color/black"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="数据库写入"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ONE_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/add_key_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TWO_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/add_key_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="THREE_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/add_key_three"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FOUR_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/add_key_four"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_key_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="写入数据库"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="数据库查询"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ONE_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/query_key_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TWO_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/query_key_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="THREE_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/query_key_three"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FOUR_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/query_key_four"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/query_key_query"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查询数据库>>1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="数据库更新"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ONE_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/update_key_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TWO_KEY的更新内容"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/update_key_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="THREE_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/update_key_three"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FOUR_KEY的更新内容"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/update_key_four"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/update_key_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="更新数据库"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="数据库删除"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ONE_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/delete_key_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TWO_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/delete_key_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="THREE_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/delete_key_three"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FOUR_KEY"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/delete_key_four"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/delete_key_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="删除数据库"/>
+    </LinearLayout>
+</ScrollView>
