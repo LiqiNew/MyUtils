@@ -1,7 +1,7 @@
 ext {
     android = [
             compileSdkVersion: 25,
-            buildToolsVersion: "25.0.1",
+            buildToolsVersion: "25.0.2",
 
             minSdkVersion    : 14,
             targetSdkVersion : 22,
@@ -14,7 +14,5 @@ ext {
             appcompat_v7            : 'com.android.support:appcompat-v7:25.2.0',
             //staticutils中image-loader图片加载框架依赖
             staticutils_image_loader: 'com.nostra13.universalimageloader:universal-image-loader:1.9.5',
-            //staticutils中图册打开和相册打开和图片压缩框架。依赖
-            staticutils_photoframe  : 'com.github.liqinew:photoframe:v.1.0.3',
     ]
 }

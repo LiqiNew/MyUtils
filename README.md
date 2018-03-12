@@ -10,8 +10,6 @@ wifi操作工具、单位换算工具、zip压缩和解压操作工具、XML解�
 
 **BaseLogger：'com.github.liqinew:baselogger:V.1.0.0'**<br>
 
-**PhotoFrame：'com.github.liqinew:photoframe:v.1.0.3'**<br>
-
 **universal-image-loader：'com.nostra13.universalimageloader:universal-image-loader:1.9.5'**<br>
 
 **appcompat-v7：'com.android.support:appcompat-v7:25.2.0'**<br>
