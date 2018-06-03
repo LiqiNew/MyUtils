@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,6 +63,18 @@ public class TestDataBaseOperateP<V extends ArrayList<Map<String, String>>> impl
         strings.add(TEST_CONTENT_FOUR);
         mBaseOperateListener.presenterDataOk((V) DBManagerOperation.BaseDBManagerOperation(mBaseOperateListener.getContext()).orPrecisionFindByIdList(TEST_NAME, queryMap(contentOne, contentTwo, contentThree, contentFour), strings));
 
+    }
+
+    /**
+     * 查询全部-->详细请看findByAll()注释
+     */
+    public List<Map<String, String>> allFindByIdList() {
+        ArrayList<String> strings = new ArrayList<>();
+        strings.add(TEST_CONTENT_ONE);
+        strings.add(TEST_CONTENT_TWO);
+        strings.add(TEST_CONTENT_THREE);
+        strings.add(TEST_CONTENT_FOUR);
+        return DBManagerOperation.BaseDBManagerOperation(mBaseOperateListener.getContext()).findByAll(TEST_NAME, strings);
     }
 
     /**

@@ -14,14 +14,16 @@ import java.lang.ref.SoftReference;
  * @author LiQi
  */
 public class BaseSharePreference {
+    private static final String TAG=BaseSharePreference.class.getName();
     private static Reference<BaseSharePreference> mBaseSharePreference;
     private SharedPreferences spf;
-
+    private static String mSpName="LiQi_Utils";
     /**
      * @param spName SharePreference文件名
      */
     private BaseSharePreference(Context context, String spName) {
-        spf = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
+        spf = context.getApplicationContext().getSharedPreferences(spName, Context.MODE_PRIVATE);
+        mSpName=spName;
     }
 
     /**
@@ -31,8 +33,13 @@ public class BaseSharePreference {
      * @param spName  SharePreference文件名
      * @return BaseSharePreference对象
      */
-    public static BaseSharePreference initBaseSharePreference(Context context, String spName) {
-        return null == mBaseSharePreference ? (mBaseSharePreference = new SoftReference<>(new BaseSharePreference(context, spName))).get() : mBaseSharePreference.get();
+    public static synchronized BaseSharePreference initBaseSharePreference(Context context, String spName) {
+        synchronized (BaseSharePreference.class) {
+            if (null == mBaseSharePreference || null == mBaseSharePreference.get()) {
+                mBaseSharePreference = new SoftReference<>(new BaseSharePreference(context, spName));
+            }
+        }
+        return mBaseSharePreference.get();
     }
 
     /**
@@ -54,10 +61,10 @@ public class BaseSharePreference {
      */
     public static BaseSharePreference getBaseSharePreference(Context context) {
         if (null == mBaseSharePreference) {
-            Logger.e("BaseSharePreference", "BaseSharePreference没有初始化，创建一个独立的BaseSharePreference实例。");
-            return getNewBaseSharePreference(context, "LiQi_Utils");
+            Logger.e(TAG, "BaseSharePreference没有初始化，创建一个独立的BaseSharePreference实例。");
+            return getNewBaseSharePreference(context, mSpName);
         } else {
-            return mBaseSharePreference.get();
+            return initBaseSharePreference(context,mSpName);
         }
     }
 
@@ -119,11 +126,12 @@ public class BaseSharePreference {
      * boolean 类型的缺省值为false。
      * 如果使用BaseSharePreferenceTypeEnum.SP_ALL_MAP类型取出，那么key失效
      * </hint>
-     *@param <T> 继承 Object的泛型
+     *
+     * @param <T>      继承 Object的泛型
      * @param key      键
      * @param typeEnum 数据取出类型.通过BaseSharePreferenceTypeEnum枚举设置
-     * @see BaseSharePreferenceTypeEnum
      * @return T
+     * @see BaseSharePreferenceTypeEnum
      */
 
     public <T extends Object> T getObjectKeyValue(String key, BaseSharePreferenceTypeEnum typeEnum) {

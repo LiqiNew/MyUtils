@@ -9,9 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.liqi.Logger;
 import com.liqi.myutils.demo.R;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Map;
  * Created by LiQi on 2017/12/6.
  */
 
-public class TestDataBaseOperateActivity extends AppCompatActivity implements View.OnClickListener,TestDataBaseOperateP.OnTestDataBaseOperateListener<ArrayList<Map<String, String>>>{
+public class TestDataBaseOperateActivity extends AppCompatActivity implements View.OnClickListener, TestDataBaseOperateP.OnTestDataBaseOperateListener<ArrayList<Map<String, String>>> {
     private TextView content;
     private EditText add_key_one, add_key_two, add_key_three, add_key_four,
             query_key_one, query_key_two, query_key_three, query_key_four,
@@ -32,6 +34,7 @@ public class TestDataBaseOperateActivity extends AppCompatActivity implements Vi
 
     private Button query_key_query;
     private TestDataBaseOperateP<ArrayList<Map<String, String>>> mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +61,7 @@ public class TestDataBaseOperateActivity extends AppCompatActivity implements Vi
         query_key_query.setOnClickListener(this);
         findViewById(R.id.update_key_update).setOnClickListener(this);
         findViewById(R.id.delete_key_delete).setOnClickListener(this);
-        mPresenter=new TestDataBaseOperateP<>(this);
+        mPresenter = new TestDataBaseOperateP<>(this);
     }
 
     @Override
@@ -134,6 +137,14 @@ public class TestDataBaseOperateActivity extends AppCompatActivity implements Vi
                         break;
                 }
                 query_key_query.setText("查询数据库>>" + (queryCode + 1));
+                
+                List<Map<String, String>> mapList = mPresenter.allFindByIdList();
+                if (null != mapList && !mapList.isEmpty()) {
+                    for (Map<String, String> map : mapList
+                            ) {
+                        Logger.e("TestDataBase>>>全部查询", "one值:" + map.get(OnDatabaseTableHelperListener.TEST_CONTENT_ONE));
+                    }
+                }
                 break;
             //更新
             case R.id.update_key_update:

@@ -20,7 +20,7 @@ import java.util.Map.Entry;
  */
 public class ActivityUtil {
     private static ActivityUtil mActivityUtil;
-    private final String TAG = "ActivityUtil.";
+    private final String TAG = getClass().getName();
     private Intent mIntent;
 
     private ActivityUtil() {
@@ -34,6 +34,15 @@ public class ActivityUtil {
      */
     public static ActivityUtil getActivityUtil() {
         return mActivityUtil = null == mActivityUtil ? new ActivityUtil() : mActivityUtil;
+    }
+
+    /**
+     * 获取intent
+     *
+     * @return Intent
+     */
+    public Intent getIntent() {
+        return mIntent;
     }
 
     /**
@@ -173,7 +182,8 @@ public class ActivityUtil {
                     if (value instanceof Serializable) {
                         mIntent.putExtra(en.getKey(), (Serializable) en.getValue());
                     } else {
-                        Logger.e(TAG + "startActivityWithObjectData()", "传入的类型不符合规定");
+                        mIntent.putExtra(en.getKey(), "");
+                        Logger.e(TAG + "startActivityWithObjectData()", "传入的类型不符合规定>>>>默认传输值：\"\"");
                     }
 
                 }
@@ -230,7 +240,8 @@ public class ActivityUtil {
                     if (value instanceof Serializable) {
                         mIntent.putExtra(en.getKey(), (Serializable) en.getValue());
                     } else {
-                        Logger.e(TAG + "startActivityWithObjectData()", "带请求标识的方法传入的类型不符合规定");
+                        mIntent.putExtra(en.getKey(), "");
+                        Logger.e(TAG + "startActivityWithObjectData()", "带请求标识的方法传入的类型不符合规定>>>>默认传输值：\"\"");
                     }
                 }
             } else {
@@ -284,7 +295,8 @@ public class ActivityUtil {
                     if (value instanceof Serializable) {
                         mIntent.putExtra(en.getKey(), (Serializable) en.getValue());
                     } else {
-                        Logger.e(TAG + "startFragmentWithObjectData()", "传入的类型不符合规定");
+                        mIntent.putExtra(en.getKey(), "");
+                        Logger.e(TAG + "startFragmentWithObjectData()", "传入的类型不符合规定>>>>默认传输值：\"\"");
                     }
                 }
             } else {
@@ -399,7 +411,8 @@ public class ActivityUtil {
                     if (value instanceof Long) {
                         mIntent.putExtra(en.getKey(), (long) en.getValue());
                     } else {
-                        Logger.e(TAG + "startActivityForBundleData()", "传入的类型不符合规定");
+                        mIntent.putExtra(en.getKey(), "");
+                        Logger.e(TAG + "startActivityForBundleData()", "传入的类型不符合规定>>>>默认传输值：\"\"");
                     }
                 }
             } else {

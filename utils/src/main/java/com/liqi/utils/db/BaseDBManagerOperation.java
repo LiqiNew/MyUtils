@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public final class BaseDBManagerOperation {
     private static BaseDBManagerOperation mBaseDBManagerOperation;
-    private final String TAG = "BaseDBManagerOperation";
+    private final String TAG = getClass().getName();
     private SQLiteOpenHelper mSQLiteOpenHelper;
 
     private BaseDBManagerOperation() {
@@ -67,17 +67,20 @@ public final class BaseDBManagerOperation {
      * @return -1写入失败
      */
     public synchronized long save(String table, ArrayList<ContentValues> valuesList) {
-        long saveSign = 1;
-        SQLiteDatabase db = mSQLiteOpenHelper.getWritableDatabase();
-        for (ContentValues contentValues : valuesList) {
-            saveSign = db.insert(table, null, contentValues);
-
-            if (saveSign < 0) {
-                break;
+        long saveSign = -1;
+        if (null != valuesList && !valuesList.isEmpty()) {
+            SQLiteDatabase db = mSQLiteOpenHelper.getWritableDatabase();
+            for (int i = 0; i < valuesList.size(); i++) {
+                ContentValues contentValues = valuesList.get(i);
+                saveSign = db.insert(table, null, contentValues);
+                if (saveSign < 0) {
+                    Logger.e(TAG, "save批量添加：写入失败>>>>索引：" + i);
+                }
             }
-
+            db.close();
+        } else {
+            Logger.e(TAG, "save批量添加：增加数据集合无数据");
         }
-        db.close();
         return saveSign;
     }
 
@@ -303,7 +306,7 @@ public final class BaseDBManagerOperation {
      *
      * @param table       表名
      * @param keyToVlsInt 指定键（键对应的值必须为int or String）
-     * @param valuesList 变动的key 和value值集合
+     * @param valuesList  变动的key 和value值集合
      */
     public synchronized void updateAndInsertAndDele(String table, String keyToVlsInt,
                                                     ArrayList<ContentValues> valuesList) {
@@ -656,9 +659,9 @@ public final class BaseDBManagerOperation {
                     if (index >= 0) {
                         String tagVal = cursor.getString(index);
                         hashTable.put(tagString, tagVal == null ? "" : tagVal);
-                        list.add(hashTable);
                     }
                 }
+                list.add(hashTable);
             }
             // 关闭游标
             cursor.close();
