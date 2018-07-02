@@ -5,7 +5,7 @@ package com.liqi.utils.db;
  * Created by LiQi on 2017/12/6.
  */
 
-enum DataBaseTypeEnum {
+public enum DataBaseTypeEnum {
     /**
      * String类型
      */

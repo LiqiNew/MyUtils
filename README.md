@@ -2,7 +2,7 @@
 [![](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-%E6%9D%8E%E5%A5%87-orange.svg)](https://github.com/LiqiNew)
 
 # MyUtils
-MyUtils是一个包含全方位的工具的工具项目。项目里面提供Base64编码解码工具、MD5加密工具、AES加密解码工具、SharePreference操作工具、
+MyUtils是一个包含全方位的工具的工具项目。项目里面提供Base64编码解码工具、MD5加密工具、AES加密解码工具(支持android端平台加密解密，java端和android端相互加密解密)、SharePreference操作工具、
 File文件操作工具、日期获取和计算工具、界面跳转Intent操作工具、字符串验证和数值转换操作工具、手机震动工具、系统资源操作工具、网络检测工具、
 wifi操作工具、单位换算工具、zip压缩和解压操作工具、XML解析操作工具（只支持几种指定格式）、图片加载和处理工具，数据库操作（增删改查）工具。
 
@@ -32,7 +32,7 @@ allprojects {
 ```
 **2：依赖MyUtils**<br>
 ```gradle
-compile 'com.github.liqinew:myutils:V.1.1.1'
+compile 'com.github.liqinew:myutils:V.1.1.2'
 ```
 
 ###  [点击查阅MyUtils-API文档](https://liqinew.github.io/MyUtils/)
@@ -41,7 +41,8 @@ compile 'com.github.liqinew:myutils:V.1.1.1'
 
 * **Base64**对象是Base64编码解码工具
 * **MD5Util**对象是MD5加密工具
-* **AESEncryptor**对象是AES加密解码工具
+* **AndroidAESEncryptor**对象是Android端平台AES加密解密工具
+* **JToAAesEncryptor**对象是java端和android端相互AES加密解密工具
 * **BaseSharePreference**对象是SharePreference操作工具
 * **StaticFileUtils**对象是File文件操作工具
 * **TimeUtil**对象是日期获取和计算工具

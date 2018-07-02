@@ -24,8 +24,12 @@
             android:id="@+id/test_other_button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="AES要加密内容:内容"/>
-
+            android:text="Android-本地AES要加密内容\n:Android-端AES-内容"/>
+        <Button
+            android:id="@+id/test_other_button17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="解密Java端-AES加密内容"/>
         <Button
             android:id="@+id/test_other_button3"
             android:layout_width="match_parent"

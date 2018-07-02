@@ -5,7 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 
-import com.liqi.utils.encoding.AESEncryptor;
+import com.liqi.utils.encoding.AndroidAESEncryptor;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -346,6 +346,9 @@ public class StaticFileUtils {
 
     /**
      * 把文本内容用ASE加密写到本地
+     * <p>
+     * 加密方式采用：AndroidAESEncryptor.encrypt128(key,content),解密请使用：AndroidAESEncryptor.decrypt128(key, content)
+     * </p>
      *
      * @param password 密码
      * @param content  内容
@@ -361,7 +364,7 @@ public class StaticFileUtils {
         try {
             fileOutputStream = new FileOutputStream(file);
             bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-            bufferedOutputStream.write(AESEncryptor.encrypt(password, content)
+            bufferedOutputStream.write(AndroidAESEncryptor.encrypt128(password, content)
                     .getBytes());
             bufferedOutputStream.flush();
             if (file.exists())

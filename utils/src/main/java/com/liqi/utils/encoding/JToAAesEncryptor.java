@@ -1,85 +1,95 @@
 package com.liqi.utils.encoding;
 
-import android.annotation.SuppressLint;
-
-import java.security.SecureRandom;
+import android.text.TextUtils;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * AES算术加密(向4.2版本以上支持)
- *
- * @author LiQi
+ * Java-android互通加密AES算术加密
  */
-public class AESEncryptor {
+public class JToAAesEncryptor {
     private final static String HEX = "0123456789ABCDEF";
+    private final static String CODING = "UTF-8";
+    private static final String VIPARA = "1269571569321021";
 
     /**
      * 加密
      *
-     * @param seed      加密钥匙
+     * @param seed      加密钥匙（length==16）
+     * @param cleartext 要加密内容
+     * @param coding    编码
+     * @return 加密之后的内容
+     * @throws Exception 加密失败异常
+     */
+    public static String encrypt(String seed, String cleartext, String coding)
+            throws Exception {
+        byte[] result = encrypt(seed.getBytes(), cleartext.getBytes(TextUtils.isEmpty(coding) ? CODING : coding));
+        return toHex(result);
+    }
+
+    /**
+     * 加密
+     *
+     * @param seed      加密钥匙（length==16）
      * @param cleartext 要加密内容
      * @return 加密之后的内容
      * @throws Exception 加密失败异常
      */
     public static String encrypt(String seed, String cleartext)
             throws Exception {
-        byte[] rawKey = getRawKey(seed.getBytes());
-        byte[] result = encrypt(rawKey, cleartext.getBytes());
+        byte[] result = encrypt(seed.getBytes(), cleartext.getBytes(CODING));
         return toHex(result);
     }
 
     /**
      * 解密
      *
-     * @param seed      解密钥匙
+     * @param seed      解密钥匙（length==16）
+     * @param encrypted 加密内容
+     * @param coding    编码
+     * @return
+     * @throws Exception
+     */
+    public static String decrypt(String seed, String encrypted, String coding)
+            throws Exception {
+        byte[] enc = toByte(encrypted);
+        byte[] result = decrypt(seed.getBytes(), enc);
+        return new String(result, TextUtils.isEmpty(coding) ? CODING : coding);
+    }
+
+    /**
+     * 解密
+     *
+     * @param seed      解密钥匙（length>=16）
      * @param encrypted 加密内容
      * @return
      * @throws Exception
      */
     public static String decrypt(String seed, String encrypted)
             throws Exception {
-        byte[] rawKey = getRawKey(seed.getBytes());
         byte[] enc = toByte(encrypted);
-        byte[] result = decrypt(rawKey, enc);
-        return new String(result);
-    }
-
-    @SuppressLint("TrulyRandom")
-    private static byte[] getRawKey(byte[] seed) throws Exception {
-        KeyGenerator kgen = KeyGenerator.getInstance("AES");
-        // SHA1PRNG 强随机种子算法, 要区别4.2以上版本的调用方法
-        SecureRandom sr = null;
-        if (android.os.Build.VERSION.SDK_INT >= 17) {
-            sr = SecureRandom.getInstance("SHA1PRNG", "Crypto");
-        } else {
-            sr = SecureRandom.getInstance("SHA1PRNG");
-        }
-        sr.setSeed(seed);
-        kgen.init(256, sr); // 192 and 256 bits may not be available
-        SecretKey skey = kgen.generateKey();
-        byte[] raw = skey.getEncoded();
-        return raw;
+        byte[] result = decrypt(seed.getBytes(), enc);
+        return new String(result, "utf-8");
     }
 
     private static byte[] encrypt(byte[] raw, byte[] clear) throws Exception {
+        IvParameterSpec zeroIv = new IvParameterSpec(VIPARA.getBytes());
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
-        byte[] encrypted = cipher.doFinal(clear);
-        return encrypted;
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, zeroIv);
+        return cipher.doFinal(clear);
     }
 
     private static byte[] decrypt(byte[] raw, byte[] encrypted)
             throws Exception {
+        IvParameterSpec zeroIv = new IvParameterSpec(VIPARA.getBytes());
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, skeySpec);
-        byte[] decrypted = cipher.doFinal(encrypted);
-        return decrypted;
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, skeySpec, zeroIv);
+        return cipher.doFinal(encrypted);
     }
 
     /**

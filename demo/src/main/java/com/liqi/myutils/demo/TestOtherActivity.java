@@ -17,8 +17,9 @@ import com.liqi.utils.NetWorkUtil;
 import com.liqi.utils.StaticUtility;
 import com.liqi.utils.Validation;
 import com.liqi.utils.VibratorUtil;
-import com.liqi.utils.encoding.AESEncryptor;
+import com.liqi.utils.encoding.AndroidAESEncryptor;
 import com.liqi.utils.encoding.Base64;
+import com.liqi.utils.encoding.JToAAesEncryptor;
 import com.liqi.utils.encoding.MD5Util;
 import com.liqi.utils.file.StaticFileUtils;
 import com.liqi.utils.imageloader.ImageLoaderUtils;
@@ -74,7 +75,7 @@ public class TestOtherActivity extends AppCompatActivity {
             }
         });
 
-        //AES加密
+        //android端本地AES加密
         findViewById(R.id.test_other_button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,16 +85,16 @@ public class TestOtherActivity extends AppCompatActivity {
                 switch (mAseType) {
                     case 1:
                         try {
-                            String encryptContent = AESEncryptor.encrypt("123456", content);
-                            button.setText("AES要解密内容:" + encryptContent);
+                            String encryptContent = AndroidAESEncryptor.encrypt128("123456", content);
+                            button.setText("Android-本地AES要解密内容\n:" + encryptContent);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         break;
                     case 2:
                         try {
-                            String decryptContent = AESEncryptor.decrypt("123456", content);
-                            button.setText("AES要加密内容:" + decryptContent);
+                            String decryptContent = AndroidAESEncryptor.decrypt128("123456", content);
+                            button.setText("Android-本地AES要加密内容\n:" + decryptContent);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -102,7 +103,21 @@ public class TestOtherActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //解密Java端-AES加密内容
+        findViewById(R.id.test_other_button17).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button button = (Button) v;
+                //javaAES加密出来的密文，明文是：加密内容
+                String decryptContent = "3DF88A85EC0D0489269F09286D6C6B10";
+                try {
+                    decryptContent = JToAAesEncryptor.decrypt(JavaTest.KEY, decryptContent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                button.setText("解密Java端-AES加密内容\n" + decryptContent);
+            }
+        });
         //Base64编码解码
         findViewById(R.id.test_other_button3).setOnClickListener(new View.OnClickListener() {
             @Override
