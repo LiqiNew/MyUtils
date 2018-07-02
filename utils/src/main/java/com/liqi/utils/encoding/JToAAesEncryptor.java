@@ -7,7 +7,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Java-android互通加密AES算术加密
+ * Java端-android系统平台互通加密AES算术加密
  */
 public class JToAAesEncryptor {
     private final static String HEX = "0123456789ABCDEF";

@@ -14,7 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * AES算术加密(向4.2版本以上支持)
  * * <p>
- * 只适合android本地加密
+ * 只适合android系统加密
  * </p>
  *
  * @author LiQi
