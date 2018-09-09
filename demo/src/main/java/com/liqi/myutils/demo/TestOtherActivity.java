@@ -313,8 +313,8 @@ public class TestOtherActivity extends AppCompatActivity {
                  * 手机验证
                  *
                  */
-                boolean matchMobile = Validation.matchMobile("19999999999");
-                Toast.makeText(TestOtherActivity.this, "double类型12.123转换值：" + doubleToInt + "\n19999999999手机号码验证结果：" + matchMobile, Toast.LENGTH_SHORT).show();
+                boolean matchMobile = Validation.matchMobile("16699999999");
+                Toast.makeText(TestOtherActivity.this, "double类型12.123转换值：" + doubleToInt + "\n16699999999手机号码验证结果：" + matchMobile, Toast.LENGTH_SHORT).show();
             }
         });
 
