@@ -75,6 +75,9 @@ public class ActivityUtil {
         if (null != context && null != clazz) {
             clearIntent();
             mIntent.setClass(context, clazz);
+            if (!(context instanceof Activity)) {
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
             context.startActivity(mIntent);
         } else {
             Logger.e(TAG + "startActivity()", "参数值传入为空");
@@ -140,6 +143,67 @@ public class ActivityUtil {
 //    }
 
     /**
+     * 获取配置完毕的intent对象
+     *
+     * @param context 上下文
+     * @param clazz   目标activity.class
+     * @param data    Object类型的数据
+     *                key:名称
+     *                value:Object类型值,支持的类型(String,Integer,Boolean,Double,Float,Long,Serializable)
+     */
+    public Intent getConfigurationIntent(Context context, Class clazz, Map<String, Object> data) {
+        if (null != context && null != clazz) {
+            clearIntent();
+            mIntent.setClass(context, clazz);
+            if (data != null) {
+                for (Entry<String, Object> en : data.entrySet()) {
+                    Object value = en.getValue();
+                    if (value instanceof String) {
+                        mIntent.putExtra(en.getKey(), en.getValue().toString());
+                        continue;
+                    }
+                    if (value instanceof Integer) {
+                        mIntent.putExtra(en.getKey(), (int) en.getValue());
+                        continue;
+                    }
+                    if (value instanceof Boolean) {
+                        mIntent.putExtra(en.getKey(), (boolean) en.getValue());
+                        continue;
+                    }
+                    if (value instanceof Double) {
+                        mIntent.putExtra(en.getKey(), (double) en.getValue());
+                        continue;
+                    }
+                    if (value instanceof Float) {
+                        mIntent.putExtra(en.getKey(), (float) en.getValue());
+                        continue;
+                    }
+                    if (value instanceof Long) {
+                        mIntent.putExtra(en.getKey(), (long) en.getValue());
+                        continue;
+                    }
+                    if (value instanceof Serializable) {
+                        mIntent.putExtra(en.getKey(), (Serializable) en.getValue());
+                    } else {
+                        mIntent.putExtra(en.getKey(), "");
+                        Logger.e(TAG + "getConfigurationIntent()", "传入的类型不符合规定>>>>默认传输值：\"\"");
+                    }
+
+                }
+            } else {
+                Logger.e(TAG + "getConfigurationIntent()", "参数data的值传入为空");
+            }
+
+            if (!(context instanceof Activity)) {
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+        } else {
+            Logger.e(TAG + "getConfigurationIntent()", "参数值传入为空");
+        }
+        return mIntent;
+    }
+
+    /**
      * 开启一个新的activity
      *
      * @param context 上下文
@@ -190,6 +254,11 @@ public class ActivityUtil {
             } else {
                 Logger.e(TAG + "startActivityWithObjectData()", "参数data的值传入为空");
             }
+
+            if (!(context instanceof Activity)) {
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+
             context.startActivity(mIntent);
         } else {
             Logger.e(TAG + "startActivityWithObjectData()", "参数值传入为空");
@@ -452,6 +521,10 @@ public class ActivityUtil {
                 Logger.e(TAG + "startActivityForData()", "参数datas的值传入为空");
             }
 
+            if (!(context instanceof Activity)) {
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+
             context.startActivity(mIntent);
         } else {
             Logger.e(TAG + "startActivityForData()", "参数值传入为空");
@@ -502,6 +575,11 @@ public class ActivityUtil {
             } else {
                 Logger.e(TAG + "startActivityForBundleListObj()", "参数list的值传入为空");
             }
+
+            if (!(context instanceof Activity)) {
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+
             context.startActivity(mIntent);
         } else {
             Logger.e(TAG + "startActivityForBundleListObj()", "参数值传入为空");
@@ -527,6 +605,11 @@ public class ActivityUtil {
             } else {
                 Logger.e(TAG + "startActivityForObj()", "参数serializableObj的值传入为空");
             }
+
+            if (!(context instanceof Activity)) {
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+
             context.startActivity(mIntent);
         } else {
             Logger.e(TAG + "startActivityForObj()", "参数值传入为空");
@@ -588,6 +671,7 @@ public class ActivityUtil {
      * 清空掉intent里面存储的数据
      */
     private void clearIntent() {
+        mIntent.setFlags(0);
         Bundle extras = mIntent.getExtras();
         if (null != extras && !extras.isEmpty())
             extras.clear();

@@ -32,7 +32,7 @@ allprojects {
 ```
 **2：依赖MyUtils**<br>
 ```gradle
-compile 'com.github.liqinew:myutils:V.1.1.3'
+compile 'com.github.liqinew:myutils:V.1.1.4'
 ```
 
 ###  [点击查阅MyUtils-API文档](https://liqinew.github.io/MyUtils/)
