@@ -17,6 +17,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -30,6 +31,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -172,25 +174,70 @@ public class StaticUtility {
     }
 
     /**
-     * 获取手机的MAC地址
+     * 获取mac地址。高低版本兼容
+     *
+     * @param context 上下文
+     * @return mac
+     */
+    public static String getMacAddress(Context context) {
+        String mac;
+        if (StaticUtility.getBuildLevel() < Build.VERSION_CODES.M) {
+            mac = getLowVersionMacAddress(context);
+        } else {
+            mac = getHighVersionMacAddress();
+        }
+        return mac;
+    }
+
+    /**
+     * 低版本获取手机的MAC地址
      *
      * @param context 上下文
      * @return 手机的MAC地址
      */
-    public static String getWifiMacAddress(Context context) {
-        String rs = "";
+    private static String getLowVersionMacAddress(Context context) {
+        String rs = "02:00:00:00:00:00";
         try {
             WifiManager wifi = (WifiManager) context
                     .getSystemService(Context.WIFI_SERVICE);
-            if (wifi == null)
+            if (wifi == null) {
                 return rs;
+            }
+
             WifiInfo info = wifi.getConnectionInfo();
             rs = info.getMacAddress();
-            if (rs == null)
-                rs = "";
+            if (TextUtils.isEmpty(rs)) {
+                rs = "02:00:00:00:00:00";
+            }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return rs;
+    }
+
+    // Android 6.0以上获取Mac地址
+    private static String getHighVersionMacAddress() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(String.format("%02X:", b));
+                }
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "02:00:00:00:00:00";
     }
 
     /**

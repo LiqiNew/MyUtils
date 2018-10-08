@@ -52,6 +52,8 @@ public class TestOtherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_other_activity);
 
+        Logger.e("Mac","Mac地址："+StaticUtility.getMacAddress(this));
+
         //SharePreference操作
         final TextView testOtherTextview = (TextView) findViewById(R.id.test_other_textview);
         findViewById(R.id.test_other_button).setOnClickListener(new View.OnClickListener() {
