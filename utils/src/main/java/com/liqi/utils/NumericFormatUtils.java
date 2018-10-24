@@ -66,9 +66,13 @@ public class NumericFormatUtils {
      * 转换类型枚举
      */
     public enum NumericFormatTypeEnum {
-        //中文
+        /**
+         * 中文提示语
+         */
         CHINESE,
-        //英文
+        /**
+         * 英文提示语
+         */
         ENGLISH
     }
 }

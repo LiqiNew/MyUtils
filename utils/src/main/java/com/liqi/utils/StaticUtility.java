@@ -646,10 +646,17 @@ public class StaticUtility {
         context.startActivity(home);
     }
 
+    /**
+     * 设备屏幕高度和宽度获取类型枚举
+     */
     public enum PixelsHeightWidth {
-        //高度
+        /**
+         * 高度
+         */
         HEIGHT,
-        //宽度
+        /**
+         *  宽度
+         */
         WIDTH
     }
 }
