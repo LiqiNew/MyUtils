@@ -19,21 +19,32 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings.Secure;
+import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
+import android.view.ViewConfiguration;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.liqi.Logger;
+
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 静态实用工具
@@ -41,6 +52,8 @@ import java.util.List;
  * @author Liqi
  */
 public class StaticUtility {
+
+    private static final String TAG = StaticUtility.class.getName();
 
     /**
      * 获取本地APP版本号
@@ -360,37 +373,36 @@ public class StaticUtility {
      * @param date    控件时间（格式：2012-02-05）
      * @return 系统的时间Dialog
      */
-    public static Dialog onCreateDialog(Context context, final TextView text,
-                                        String date) {
-        Dialog dialog = null;
-        String time[] = date.split("-");
-        DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month,
-                                  int dayOfMonth) {
-
-                String month_s = month + 1 + "";
-
-                if ((month + 1) < 10) {
-                    month_s = "0" + month_s;
-                }
-
-                String dayOfMonth_s = dayOfMonth + "";
-
-                if (dayOfMonth < 10) {
-                    dayOfMonth_s = "0" + dayOfMonth_s;
-                }
-
-                text.setText(year + "-" + month_s + "-" + dayOfMonth_s);
-            }
-        };
-        dialog = new DatePickerDialog(context, dateListener,
-                Integer.valueOf(time[0]), Integer.valueOf(time[1]) - 1,
-                Integer.valueOf(time[2]));
-
-        return dialog;
-    }
-
+//    public static Dialog onCreateDialog(Context context, final TextView text,
+//                                        String date) {
+//        Dialog dialog = null;
+//        String time[] = date.split("-");
+//        DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker datePicker, int year, int month,
+//                                  int dayOfMonth) {
+//
+//                String month_s = month + 1 + "";
+//
+//                if ((month + 1) < 10) {
+//                    month_s = "0" + month_s;
+//                }
+//
+//                String dayOfMonth_s = dayOfMonth + "";
+//
+//                if (dayOfMonth < 10) {
+//                    dayOfMonth_s = "0" + dayOfMonth_s;
+//                }
+//
+//                text.setText(year + "-" + month_s + "-" + dayOfMonth_s);
+//            }
+//        };
+//        dialog = new DatePickerDialog(context, dateListener,
+//                Integer.valueOf(time[0]), Integer.valueOf(time[1]) - 1,
+//                Integer.valueOf(time[2]));
+//
+//        return dialog;
+//    }
 
     /**
      * 从Assets中读取图片
@@ -437,5 +449,207 @@ public class StaticUtility {
             isAppRunning = true;
         }
         return isAppRunning;
+    }
+
+    /**
+     * 返回屏幕获取的高度和宽度
+     */
+    public static int getPixelsHeightWidth(Context context, @NonNull PixelsHeightWidth heightWidth) {
+        return getPixelsHeightWidth(context).get(heightWidth);
+    }
+
+    /**
+     * 返回屏幕获取的高度和宽度
+     *
+     * @return 装有设备的高度和宽度的Map对象
+     */
+    public static Map<PixelsHeightWidth, Integer> getPixelsHeightWidth(Context context) {
+        Map<PixelsHeightWidth, Integer> floatMap = new HashMap<>();
+        // 获取屏幕的对象
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        floatMap.put(PixelsHeightWidth.HEIGHT, displayMetrics.heightPixels);
+        floatMap.put(PixelsHeightWidth.WIDTH, displayMetrics.widthPixels);
+        return floatMap;
+    }
+
+    /**
+     * 获取状态栏高度
+     *
+     * @param context 上下文
+     * @return 状态栏高度
+     */
+    public static int getStatusBarHeight(Context context) {
+        int statusBarHeightAttribute = -1;
+        if (null != context) {
+            statusBarHeightAttribute = getStatusBarHeightAttribute(context);
+            if (statusBarHeightAttribute == -1) {
+                statusBarHeightAttribute = getStatusBarHeightClass(context);
+            }
+        } else {
+            Logger.e(TAG, "getStatusBarHeight()：context=null");
+        }
+        return statusBarHeightAttribute;
+    }
+
+    /**
+     * 通过系统属性获取状态栏高度
+     *
+     * @param context 上下文
+     * @return 状态栏高度
+     */
+    private static int getStatusBarHeightAttribute(Context context) {
+        int result = -1;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen",
+                "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    /**
+     * 通过反射机制获取状态栏高度
+     *
+     * @param context 上下文
+     * @return 状态栏高度
+     */
+    private static int getStatusBarHeightClass(Context context) {
+        int statusBarHeight2 = -1;
+        try {
+            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+            Object object = clazz.newInstance();
+            int height = Integer.parseInt(clazz.getField("status_bar_height")
+                    .get(object).toString());
+            statusBarHeight2 = context.getResources().getDimensionPixelSize(height);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return statusBarHeight2;
+    }
+
+    /**
+     * 获取导航栏高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getDaoHangHeight(Context context) {
+        //有导航栏才获取高度
+        if (checkDeviceHasNavigationBar(context)) {
+            int resourceId;
+            int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android");
+            if (rid != 0) {
+                resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+                Logger.e(TAG, "导航栏ID：" + resourceId);
+                Logger.e(TAG, "导航栏高度：" + context.getResources().getDimensionPixelSize(resourceId) + "");
+                return context.getResources().getDimensionPixelSize(resourceId);
+            } else {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 判断是否有导航栏
+     *
+     * @param context 上下文
+     * @return true是有，false是没有
+     */
+    public static boolean checkDeviceHasNavigationBar(Context context) {
+
+        //通过判断设备是否有返回键、菜单键(不是虚拟键,是手机屏幕外的按键)来确定是否有navigation bar
+        boolean hasMenuKey = ViewConfiguration.get(context)
+                .hasPermanentMenuKey();
+        boolean hasBackKey = KeyCharacterMap
+                .deviceHasKey(KeyEvent.KEYCODE_BACK);
+        Logger.e(TAG, "是否有导航栏>>：" + (!hasMenuKey && !hasBackKey));
+        return !hasMenuKey && !hasBackKey;
+    }
+
+    /**
+     * 判断是否已经root
+     *
+     * @return true是已经root，false不是。
+     */
+    public static boolean isDeviceRooted() {
+        return checkRootMethod1() || checkRootMethod2() || checkRootMethod3();
+    }
+
+    private static boolean checkRootMethod1() {
+        String buildTags = android.os.Build.TAGS;
+        return buildTags != null && buildTags.contains("test-keys");
+    }
+
+    private static boolean checkRootMethod2() {
+        String[] paths = {"/system/app/Superuser.apk", "/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su", "/data/local/bin/su", "/system/sd/xbin/su",
+                "/system/bin/failsafe/su", "/data/local/su", "/su/bin/su"};
+        for (String path : paths) {
+            if (new File(path).exists()) return true;
+        }
+        return false;
+    }
+
+    private static boolean checkRootMethod3() {
+        Process process = null;
+        try {
+            process = Runtime.getRuntime().exec(new String[]{"/system/xbin/which", "su"});
+            BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            if (in.readLine() != null) return true;
+            return false;
+        } catch (Throwable t) {
+            return false;
+        } finally {
+            if (process != null) process.destroy();
+        }
+    }
+
+    /**
+     * 判断是否在模拟器上运行
+     *
+     * @param context
+     * @return true是模拟器上运行，false不是
+     */
+    public static boolean isEmulator(Context context) {
+        String url = "tel:" + "123456";
+        Intent intent = new Intent();
+        intent.setData(Uri.parse(url));
+        intent.setAction(Intent.ACTION_DIAL);
+        // 是否可以处理跳转到拨号的 Intent
+        boolean canResolveIntent = intent.resolveActivity(context.getPackageManager()) != null;
+
+        return Build.FINGERPRINT.startsWith("generic")
+                || Build.FINGERPRINT.toLowerCase().contains("vbox")
+                || Build.FINGERPRINT.toLowerCase().contains("test-keys")
+                || Build.MODEL.contains("google_sdk")
+                || Build.MODEL.contains("Emulator")
+                || Build.SERIAL.equalsIgnoreCase("unknown")
+                || Build.SERIAL.equalsIgnoreCase("android")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.MANUFACTURER.contains("Genymotion")
+                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+                || "google_sdk".equals(Build.PRODUCT)
+                || ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE))
+                .getNetworkOperatorName().toLowerCase().equals("android")
+                || !canResolveIntent;
+    }
+
+    /**
+     * 跳转到首页面
+     *
+     * @param context
+     */
+    public static void skipHome(Context context) {
+        Intent home = new Intent(Intent.ACTION_MAIN);
+        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        home.addCategory(Intent.CATEGORY_HOME);
+        context.startActivity(home);
+    }
+
+    public enum PixelsHeightWidth {
+        //高度
+        HEIGHT,
+        //宽度
+        WIDTH
     }
 }

@@ -5,13 +5,16 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 
+import com.liqi.Logger;
 import com.liqi.utils.encoding.AndroidAESEncryptor;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +24,8 @@ import java.util.List;
  * @author LiQi
  */
 public class StaticFileUtils {
+    private static final String TAG = StaticFileUtils.class.getName();
+
     /**
      * 根据路径删除指定的目录或文件，无论存在与否
      *
@@ -410,5 +415,154 @@ public class StaticFileUtils {
             fileList.add(file);
         }
         return fileList;
+    }
+
+
+    /**
+     * 获取指定文件的指定单位的大小
+     *
+     * @param filePath 文件路径
+     * @param sizeType 获取指定单位类型的值 {@link SizeTypeEnum}
+     * @return 指定单位类型的double值的大小 值跟此参数有关{@link SizeTypeEnum}
+     */
+    public static double getFileOrFilesSize(String filePath, SizeTypeEnum sizeType) {
+        File file = new File(filePath);
+        long blockSize;
+
+        if (file.isDirectory()) {
+            //Logger.e(TAG, "==是文件夹==");
+            blockSize = getFileSizes(file);
+        } else {
+            //Logger.e(TAG, "==是文件==");
+            blockSize = getFileSize(file);
+        }
+        //Logger.e(TAG, "blockSize=" + blockSize);
+        return formetFileSize(blockSize, sizeType);
+    }
+
+    /**
+     * 调用此方法自动计算指定文件或指定文件夹的大小
+     *
+     * @param filePath 文件路径
+     * @return 计算好的带B、KB、MB、GB的字符串
+     */
+    public static String getAutoFileOrFilesSize(String filePath) {
+        File file = new File(filePath);
+        long blockSize;
+        if (file.isDirectory()) {
+            blockSize = getFileSizes(file);
+        } else {
+            blockSize = getFileSize(file);
+        }
+        return FileSizeFormattingUtil.formetFileSize(blockSize, false);
+    }
+
+    /**
+     * 获取指定文件大小
+     *
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    private static long getFileSize(File file) {
+        long size = 0;
+        if (file.exists()) {
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(file);
+                size = fis.available();
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (null != fis) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            //Logger.e(TAG, "size01=" + size);
+        } else {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Logger.e(TAG, "no-exists!");
+        }
+        return size;
+    }
+
+    /**
+     * 获取指定文件夹
+     *
+     * @param f
+     * @return
+     */
+    private static long getFileSizes(File f) {
+        long size = 0;
+        File flist[] = f.listFiles();
+        for (int i = 0; i < flist.length; i++) {
+            //Logger.e(TAG, "file：" + flist[i]);
+            if (flist[i].isDirectory()) {
+                size = size + getFileSizes(flist[i]);
+                //Logger.e(TAG, "==是文件夹== >>> size：" + size);
+            } else {
+                size = size + getFileSize(flist[i]);
+                //Logger.e(TAG, "==是文件== >>> size：" + size);
+            }
+        }
+        //Logger.e(TAG, "size02=" + size);
+        return size;
+    }
+
+
+    /**
+     * 转换文件大小,指定转换的类型
+     *
+     * @param fileS
+     * @param sizeType
+     * @return
+     */
+    private static double formetFileSize(long fileS, SizeTypeEnum sizeType) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        double fileSizeLong = 0;
+        switch (sizeType) {
+            case SIZETYPE_B:
+                fileSizeLong = Double.valueOf(df.format((double) fileS));
+                break;
+            case SIZETYPE_KB:
+                fileSizeLong = Double.valueOf(df.format((double) fileS / 1024));
+                break;
+            case SIZETYPE_MB:
+                fileSizeLong = Double.valueOf(df.format((double) fileS / 1048576));
+                break;
+            case SIZETYPE_GB:
+                fileSizeLong = Double.valueOf(df.format((double) fileS / 1073741824));
+                break;
+        }
+        //Logger.e(TAG, "fileSizeLong=" + fileSizeLong);
+        return fileSizeLong;
+    }
+
+    public enum SizeTypeEnum {
+        /**
+         * 获取文件大小单位为B的double值
+         */
+        SIZETYPE_B,
+        /**
+         * 获取文件大小单位为KB的double值
+         */
+        SIZETYPE_KB,
+        /**
+         * 获取文件大小单位为MB的double值
+         */
+        SIZETYPE_MB,
+        /**
+         * 获取文件大小单位为GB的double值
+         */
+        SIZETYPE_GB
     }
 }

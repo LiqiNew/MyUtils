@@ -47,7 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="File文件写入"/>
-
         <Button
             android:id="@+id/test_other_button6"
             android:layout_width="match_parent"
@@ -129,5 +128,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="进入数据操作演示"/>
+        <Button
+            android:id="@+id/test_other_button19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="文件大小值转换\n1000000b转换"/>
+        <Button
+            android:id="@+id/test_other_button20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="数值转换\n1000000b转换"/>
+        <Button
+            android:id="@+id/test_other_button21"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="系统存储空间获取"/>
+        <Button
+            android:id="@+id/test_other_button22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="时间轴转星座和生肖"/>
+        <Button
+            android:id="@+id/test_other_button23"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="获取设备屏幕高度和宽度"/>
     </LinearLayout>
 </ScrollView>

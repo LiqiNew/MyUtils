@@ -1,10 +1,12 @@
 package com.liqi.myutils.demo;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,13 +16,17 @@ import com.liqi.myutils.demo.db.TestDataBaseOperateActivity;
 import com.liqi.utils.ActivityUtil;
 import com.liqi.utils.FDUnitUtil;
 import com.liqi.utils.NetWorkUtil;
+import com.liqi.utils.NumericFormatUtils;
 import com.liqi.utils.StaticUtility;
+import com.liqi.utils.SystemMemorySpaceGetUtil;
 import com.liqi.utils.Validation;
 import com.liqi.utils.VibratorUtil;
+import com.liqi.utils.ZodiacUtil;
 import com.liqi.utils.encoding.AndroidAESEncryptor;
 import com.liqi.utils.encoding.Base64;
 import com.liqi.utils.encoding.JToAAesEncryptor;
 import com.liqi.utils.encoding.MD5Util;
+import com.liqi.utils.file.FileSizeFormattingUtil;
 import com.liqi.utils.file.StaticFileUtils;
 import com.liqi.utils.imageloader.ImageLoaderUtils;
 import com.liqi.utils.spf.BaseSharePreference;
@@ -52,7 +58,7 @@ public class TestOtherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_other_activity);
 
-        Logger.e("Mac","Mac地址："+StaticUtility.getMacAddress(this));
+        Logger.e("Mac", "Mac地址：" + StaticUtility.getMacAddress(this));
 
         //SharePreference操作
         final TextView testOtherTextview = (TextView) findViewById(R.id.test_other_textview);
@@ -186,7 +192,8 @@ public class TestOtherActivity extends AppCompatActivity {
                                     TestOtherActivity.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            button.setText("File文件删除\n写入和删除路径：" + foundFile.getAbsolutePath());
+                                            String filesSize = StaticFileUtils.getAutoFileOrFilesSize(foundFile.getAbsolutePath());
+                                            button.setText("File文件删除\n写入和删除路径：" + foundFile.getAbsolutePath() + "\n文件大小：" + filesSize);
                                             button.setEnabled(true);
                                             mTestFile = 1;
                                         }
@@ -607,6 +614,74 @@ public class TestOtherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ActivityUtil.getActivityUtil().startActivity(TestOtherActivity.this, TestDataBaseOperateActivity.class);
+            }
+        });
+
+        //数据转换
+        findViewById(R.id.test_other_button19).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String fileSize = FileSizeFormattingUtil.formetFileSize(1000000, false);
+                Button button = (Button) v;
+                button.setText("数据转换\n1000000b转换" + fileSize);
+            }
+        });
+
+        //文件大小值转换
+        findViewById(R.id.test_other_button20).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String fileSize = NumericFormatUtils.appreciationThousandFormat(1000000, NumericFormatUtils.NumericFormatTypeEnum.CHINESE);
+                Button button = (Button) v;
+                button.setText("文件大小值转换\n1000000b转换" + fileSize);
+            }
+        });
+
+        //数据转换
+        findViewById(R.id.test_other_button21).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long memorySize = SystemMemorySpaceGetUtil.getTotalExternalMemorySize();
+                if (memorySize <= 0) {
+                    memorySize = SystemMemorySpaceGetUtil.getTotalInternalMemorySize();
+                }
+
+                long externalMemorySize = SystemMemorySpaceGetUtil.getAvailableExternalMemorySize();
+                if (externalMemorySize <= 0) {
+                    externalMemorySize = SystemMemorySpaceGetUtil.getAvailableInternalMemorySize();
+                }
+                Button button = (Button) v;
+                button.setText("数值转换\n总内存：" + FileSizeFormattingUtil.formetFileSize(memorySize, false) + " 剩余内存：" + FileSizeFormattingUtil.formetFileSize(externalMemorySize, false));
+            }
+        });
+
+        //时间轴转星座和生肖
+        findViewById(R.id.test_other_button22).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Button button = (Button) v;
+                new DatePickerDialog(TestOtherActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        //生肖
+                        String zodica = ZodiacUtil.date2Zodica(year + "-" + month + "-" + dayOfMonth, "yyyy-MM-dd");
+                        //星座
+                        String constellation = ZodiacUtil.date2Constellation(year + "-" + month + "-" + dayOfMonth, "yyyy-MM-dd");
+
+                        button.setText("时间轴转星座和生肖\n生肖：" + zodica + " 星座：" + constellation);
+                    }
+                },
+                        2018, 10, 24).show();
+            }
+        });
+
+        //获取设备屏幕高度和宽度
+        findViewById(R.id.test_other_button23).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<StaticUtility.PixelsHeightWidth, Integer> integerMap = StaticUtility.getPixelsHeightWidth(TestOtherActivity.this);
+                Button button = (Button) v;
+                button.setText("获取设备屏幕高度和宽度\n高度：" + integerMap.get(StaticUtility.PixelsHeightWidth.HEIGHT) + " 宽度：" + integerMap.get(StaticUtility.PixelsHeightWidth.WIDTH));
             }
         });
     }
